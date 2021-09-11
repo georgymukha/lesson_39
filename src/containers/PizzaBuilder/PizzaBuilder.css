@@ -1,0 +1,17 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: 1rem/1.2 "Open Sans", sans-serif;
+}
+
+.pizza-wrap {
+  margin: 0 auto;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: minmax(500px, 1fr) 1fr;
+  gap: 2rem;
+  align-items: center;
+}
