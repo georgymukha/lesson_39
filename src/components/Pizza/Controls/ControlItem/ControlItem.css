@@ -26,8 +26,25 @@
   height: 40px;
   line-height: 40px;
   border-radius: 50%;
-  background: #ff4b23;
+  background: #34ad3c;
   color: white;
   font-weight: bold;
   text-align: center;
+  overflow: hidden;
+}
+.ingredient-count:after {
+  content: '–';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ff3726;
+  font-size: 2rem;
+  line-height: 31px;
+  transition: .2s;
+}
+.ingredient-count:hover:after {
+  top: 0;
 }
