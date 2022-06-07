@@ -10,7 +10,7 @@ const CONTROLS = {
   mushrooms: 'Грибы'
 }
 
-const Controls = ({ ingredients, addIngredient, removeIngredient, price, purchasable }) => {
+const Controls = ({ ingredients, addIngredient, removeIngredient, price, purchasable, ordered }) => {
   return (
     <div className="pizza-controls">
       <h3 className="pizza-controls__title">Выберите ингредиент</h3>
@@ -30,7 +30,7 @@ const Controls = ({ ingredients, addIngredient, removeIngredient, price, purchas
       </div>
       <div className="pizza__price">Цена пиццы: <span>{price}</span>сом</div>
       <div className="pizza-order">
-        <button className="pizza-order__btn" disabled={!purchasable}>Оформить заказ</button>
+        <button className="pizza-order__btn" disabled={!purchasable} onClick={ordered}>Оформить заказ</button>
       </div>
     </div>
   );

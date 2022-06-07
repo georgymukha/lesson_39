@@ -1,7 +1,9 @@
 
 import { useState } from 'react';
+import OrderInfo from '../../components/OrderInfo/OrderInfo';
 import Controls from '../../components/Pizza/Controls/Controls';
 import Pizza from '../../components/Pizza/Pizza';
+import Modal from '../../components/UI/Modal/Modal';
 
 import './PizzaBuilder.css';
 
@@ -23,6 +25,8 @@ function PizzaBuilder() {
   const [price, setPrice] = useState(100);
 
   const [purchasable, setPurchasable] = useState(false);
+
+  const [purchasing, setPurchasing] = useState(false);
 
   const addIngredient = (ingName) => {
     const copyIngs = {
@@ -58,8 +62,22 @@ function PizzaBuilder() {
     setPurchasable(count > 0);
   }
 
+  const purchaseCancelled = () => setPurchasing(false);
+
+  const purchaseContinued = () => {
+    alert('continue');
+  }
+
   return (
     <div className="pizza-wrap">
+      <Modal show={purchasing} closed={purchaseCancelled}>
+        <OrderInfo
+          ingredients={ingredients}
+          price={price}
+          purchaseCancelled={purchaseCancelled}
+          purchaseContinued={purchaseContinued}
+        />
+      </Modal>
       <Pizza ingredients={ingredients} />
       <Controls
         ingredients={ingredients}
@@ -67,6 +85,7 @@ function PizzaBuilder() {
         removeIngredient={removeIngredient}
         price={price}
         purchasable={purchasable}
+        ordered={() => setPurchasing(true)}
       />
     </div>
   );
