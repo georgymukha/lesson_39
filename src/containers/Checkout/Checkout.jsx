@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
+
+import './Checkout.css';
 
 function Checkout() {
 
@@ -13,7 +15,7 @@ function Checkout() {
 
   return (
     <div className="checkout">
-      Checkout
+      <CheckoutSummary ingredients={ingredients}/>
     </div>
   );
 }
