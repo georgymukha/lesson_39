@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import OrderInfo from '../../components/OrderInfo/OrderInfo';
 import Controls from '../../components/Pizza/Controls/Controls';
 import Pizza from '../../components/Pizza/Pizza';
@@ -27,6 +28,8 @@ function PizzaBuilder() {
   const [purchasable, setPurchasable] = useState(false);
 
   const [purchasing, setPurchasing] = useState(false);
+
+  const navigate = useNavigate();
 
   const addIngredient = (ingName) => {
     const copyIngs = {
@@ -65,7 +68,10 @@ function PizzaBuilder() {
   const purchaseCancelled = () => setPurchasing(false);
 
   const purchaseContinued = () => {
-    alert('continue');
+    navigate({
+      pathname: "/checkout",
+      search: "?" + createSearchParams(ingredients)
+    });
   }
 
   return (
