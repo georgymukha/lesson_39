@@ -10,16 +10,10 @@ function Checkout() {
     mushrooms: 1,
   });
 
-  const [value, setValue] = useState('');
-
-  const changeHandler = (event) => {
-    setValue(event.target.value);
-  }
 
   return (
     <div className="checkout">
-      <input type="text" value={value} onChange={changeHandler} />
-      <Link to="/">Home</Link>
+      Checkout
     </div>
   );
 }
