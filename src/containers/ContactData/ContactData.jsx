@@ -34,19 +34,34 @@ function ContactData() {
     event.preventDefault();
     setLoading(true);
 
-    let order = {
-      ingredients,
-      customer
-    };
+    let data = {
+      data: {
+        ...customer,
+        ingredients: Object.keys(ingredients).map(ingName => {
+          return {
+            name: ingName,
+            count: ingredients[ingName]
+          };
+        })
+      }
+    }
 
-    axios
-      .post("/orders.json", order)
-      .then(() => {
+    axios.post('/orders', data)
+    .then(() => {
         alert('Данные успешно отправлены')
-      })
-      .finally(() => {
-        setLoading(false);
-      })
+    })
+    .finally(() => {
+      setLoading(false);
+    })
+
+    // axios
+    //   .post("/orders.json", order)
+    //   .then(() => {
+    //     alert('Данные успешно отправлены')
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   })
 
   };
 
