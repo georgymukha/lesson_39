@@ -5,6 +5,7 @@ import Button from '../../components/UI/Button/Button';
 import axios from '../../api/axios-order';
 
 import './ContactData.css';
+import Loader from '../../components/UI/Loader/Loader';
 
 function ContactData() {
   const [customer, setCustomer] = useState({
@@ -15,6 +16,8 @@ function ContactData() {
   });
 
   const {ingredients} = useOutletContext();
+
+  const [loading, setLoading] = useState(false);
 
   const changeHandler = (event) => {
     let prop = event.target.name; // email
@@ -29,6 +32,7 @@ function ContactData() {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    setLoading(true);
 
     let order = {
       ingredients,
@@ -40,8 +44,13 @@ function ContactData() {
       .then(() => {
         alert('Данные успешно отправлены')
       })
+      .finally(() => {
+        setLoading(false);
+      })
 
   };
+
+  if(loading) return <Loader/>;
 
   return (
     <div className="contact-data">
