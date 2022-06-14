@@ -5,25 +5,16 @@ import OrderInfo from '../../components/OrderInfo/OrderInfo';
 import Controls from '../../components/Pizza/Controls/Controls';
 import Pizza from '../../components/Pizza/Pizza';
 import Modal from '../../components/UI/Modal/Modal';
+import {useSelector, useDispatch} from 'react-redux';
 
 import './PizzaBuilder.css';
+import { onAdd } from '../../store/reducers/pizza.reducer';
 
-const PRICES = {
-  cheese: 20,
-  olives: 30,
-  sausage: 45,
-  mushrooms: 35,
-};
+
 
 function PizzaBuilder() {
-  const [ingredients, setIngredients] = useState({
-    cheese: 0,
-    olives: 0,
-    sausage: 0,
-    mushrooms: 0,
-  });
 
-  const [price, setPrice] = useState(100);
+  const {ingredients, price} = useSelector((store) => store.pizza);
 
   const [purchasable, setPurchasable] = useState(false);
 
@@ -31,30 +22,23 @@ function PizzaBuilder() {
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const addIngredient = (ingName) => {
-    const copyIngs = {
-      ...ingredients,
-      [ingName]: ingredients[ingName] + 1
-    };
-
-    setIngredients(copyIngs);
-
-    setPrice(price => price + PRICES[ingName]); // 100 + 30
-
-    updatePurchasable(copyIngs);
+    dispatch(onAdd(ingName));
   };
 
   const removeIngredient = (event, ingName) => {
     event.stopPropagation();
-    const copyIngs = {
-      ...ingredients,
-      [ingName]: ingredients[ingName] - 1,
-    };
+    // const copyIngs = {
+    //   ...ingredients,
+    //   [ingName]: ingredients[ingName] - 1,
+    // };
 
-    setIngredients(copyIngs);
+    // setIngredients(copyIngs);
 
-    setPrice((price) => price - PRICES[ingName]); // 100 + 30
-    updatePurchasable(copyIngs);
+    // setPrice((price) => price - PRICES[ingName]); // 100 + 30
+    // updatePurchasable(copyIngs);
   };
 
   const updatePurchasable = (ings) => {
