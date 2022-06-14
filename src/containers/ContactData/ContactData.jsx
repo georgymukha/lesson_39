@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useOutletContext } from 'react-router-dom';
 import Button from '../../components/UI/Button/Button';
+import Loader from '../../components/UI/Loader/Loader';
 
-import axios from '../../api/axios-order';
+import {useDispatch, useSelector} from 'react-redux';
+import {postOrder} from '../../store/reducers/order.reducer';
 
 import './ContactData.css';
-import Loader from '../../components/UI/Loader/Loader';
 
 function ContactData() {
   const [customer, setCustomer] = useState({
@@ -15,9 +16,11 @@ function ContactData() {
     phone: ''
   });
 
-  const {ingredients} = useOutletContext();
+  const {loading} = useSelector(store => store.order);
+  const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(false);
+
+  const {ingredients} = useOutletContext();
 
   const changeHandler = (event) => {
     let prop = event.target.name; // email
@@ -32,7 +35,6 @@ function ContactData() {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    setLoading(true);
 
     let data = {
       data: {
@@ -46,22 +48,7 @@ function ContactData() {
       }
     }
 
-    axios.post('/orders', data)
-    .then(() => {
-        alert('Данные успешно отправлены')
-    })
-    .finally(() => {
-      setLoading(false);
-    })
-
-    // axios
-    //   .post("/orders.json", order)
-    //   .then(() => {
-    //     alert('Данные успешно отправлены')
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   })
+    dispatch(postOrder(data));
 
   };
 

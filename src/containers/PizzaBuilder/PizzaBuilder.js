@@ -8,15 +8,13 @@ import Modal from '../../components/UI/Modal/Modal';
 import {useSelector, useDispatch} from 'react-redux';
 
 import './PizzaBuilder.css';
-import { onAdd } from '../../store/reducers/pizza.reducer';
+import { onAdd, onRemove } from '../../store/reducers/pizza.reducer';
 
 
 
 function PizzaBuilder() {
 
   const {ingredients, price} = useSelector((store) => store.pizza);
-
-  const [purchasable, setPurchasable] = useState(false);
 
   const [purchasing, setPurchasing] = useState(false);
 
@@ -30,33 +28,18 @@ function PizzaBuilder() {
 
   const removeIngredient = (event, ingName) => {
     event.stopPropagation();
-    // const copyIngs = {
-    //   ...ingredients,
-    //   [ingName]: ingredients[ingName] - 1,
-    // };
-
-    // setIngredients(copyIngs);
-
-    // setPrice((price) => price - PRICES[ingName]); // 100 + 30
-    // updatePurchasable(copyIngs);
+    dispatch(onRemove(ingName));
   };
 
-  const updatePurchasable = (ings) => {
-    const count = Object.values(ings).reduce((acc, value) => {
+  const isPurchasable = () => {
+    const count = Object.values(ingredients).reduce((acc, value) => {
       return acc + value
     }, 0);
 
-    setPurchasable(count > 0);
+    return count > 0;
   }
 
   const purchaseCancelled = () => setPurchasing(false);
-
-  const purchaseContinued = () => {
-    navigate({
-      pathname: "/checkout",
-      search: "?" + createSearchParams(ingredients)
-    });
-  }
 
   return (
     <div className="pizza-wrap">
@@ -65,7 +48,7 @@ function PizzaBuilder() {
           ingredients={ingredients}
           price={price}
           purchaseCancelled={purchaseCancelled}
-          purchaseContinued={purchaseContinued}
+          purchaseContinued={() => navigate("/checkout")}
         />
       </Modal>
       <Pizza ingredients={ingredients} />
@@ -74,7 +57,7 @@ function PizzaBuilder() {
         addIngredient={addIngredient}
         removeIngredient={removeIngredient}
         price={price}
-        purchasable={purchasable}
+        purchasable={isPurchasable()}
         ordered={() => setPurchasing(true)}
       />
     </div>

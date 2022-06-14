@@ -19,11 +19,15 @@ export const pizzaSlice = createSlice({
     price: 100
   },
   reducers: {
-    onAdd: (state, action) => { // {type: 'pizza/onAdd', payload}
+    onAdd: (state, action) => {
       state.ingredients[action.payload]++;
       state.price += PRICES[action.payload];
+    },
+    onRemove: (state, action) => {
+      state.ingredients[action.payload]--;
+      state.price -= PRICES[action.payload];
     }
   }
 });
 
-export const {onAdd} = pizzaSlice.actions;
+export const { onAdd, onRemove } = pizzaSlice.actions;
